@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div v-if="!userNotFound">
+        <div v-if="!postNotFound">
             <div class="mb-2">
                 <h3 class="text-center">{{this.pageTitle}}</h3>
             </div>
@@ -14,31 +14,18 @@
                     @finishFailed="onFinishFailed"
             >
                 <a-form-item
-                        label="Name"
-                        name="name"
-                        :rules="[{ required: true, message: 'Please input name!' }]"
+                        label="Title"
+                        name="title"
+                        :rules="[{ required: true, message: 'Please input title!' }]"
                 >
-                    <a-input v-model:value="formState.name"/>
+                    <a-input v-model:value="formState.title"/>
                 </a-form-item>
                 <a-form-item
-                        label="Email"
-                        name="email"
-                        :rules="[{ required: true, message: 'Please input email!' }]"
+                        label="Body"
+                        name="body"
+                        :rules="[{ required: true, message: 'Please input body!' }]"
                 >
-                    <a-input v-model:value="formState.email"/>
-                </a-form-item>
-                <a-form-item
-                        label="Gender"
-                        name="gender"
-                        :rules="[{ required: true, message: 'Please input gender!' }]"
-                >
-                    <a-radio-group v-model:value="formState.gender">
-                        <a-radio value="female">Female</a-radio>
-                        <a-radio value="male">Male</a-radio>
-                    </a-radio-group>
-                </a-form-item>
-                <a-form-item label="Status" name="status">
-                    <a-switch v-model:checked="formState.status"/>
+                    <a-input v-model:value="formState.body"/>
                 </a-form-item>
                 <a-form-item :wrapper-col="{ offset: 4, span: 16 }">
                     <a-button type="primary" html-type="submit">Submit</a-button>
@@ -62,13 +49,11 @@
     import {mapState, mapActions} from "vuex";
     import { notification } from 'ant-design-vue';
     export default defineComponent({
-        name: "User",
+        name: "Post",
         setup() {
             const formState = reactive({
-                name: '',
-                email: '',
-                gender: '',
-                status: true,
+                title: '',
+                body: ''
             });
             return {
                 formState
@@ -82,18 +67,18 @@
         },
         created() {
             this.routerName = this.$route.name;
-            if (this.routerName === "updateUser") {
-                this.pageTitle = "Update User Form";
-                this.$store.dispatch('users/getUser', this.$route.params.id);
+            if (this.routerName === "updatePost") {
+                this.pageTitle = "Update User Post Form";
+                this.$store.dispatch('posts/getPost', this.$route.params.id);
             }
             else {
-                this.pageTitle = "Add User Form";
+                this.pageTitle = "Add User Post Form";
             }
         },
         computed: mapState({
-            response: state => state.users.responseFromApi,
-            userData: state => state.users.userData,
-            userNotFound: state => state.users.userNotFound
+            response: state => state.posts.responseFromApi,
+            postData: state => state.posts.postData,
+            postNotFound: state => state.posts.postNotFound
         }),
         watch: {
             response(newResponse) {
@@ -101,9 +86,9 @@
                     if (newResponse === "success") {
                         notification['success']({
                             message: 'Success',
-                            description: 'User created successfully',
+                            description: 'Post created successfully',
                         });
-                        window.location.href = "/users"
+                        window.location.href = `/user/${this.$route.params.userId ? this.$route.params.userId : this.$route.params.id}/posts`
                     }
                     else {
                         notification['error']({
@@ -113,32 +98,29 @@
                     }
                 }
             },
-            userData(newResponse) {
-                this.formState.name = newResponse.name;
-                this.formState.email = newResponse.email;
-                this.formState.gender = newResponse.gender;
-                this.formState.status = newResponse.status === "inactive" ? false : true;
+            postData(newResponse) {
+                this.formState.title = newResponse.title;
+                this.formState.body = newResponse.body;
             }
         },
         methods: {
-            ...mapActions('users', ["createUser", "getUser", "updateUser"]),
+            ...mapActions('posts', ["createPost", "getPost", "updatePost"]),
             onFinish(values) {
-                values.status = values.status === true ? "active" : "inactive";
-                if (this.routerName === "createUser") {
-                    this.createUserMethod(values)
+                if (this.routerName === "createPost") {
+                    this.createPostMethod(values)
                 }
                 else {
-                    this.updateUserMethod(values, this.$route.params.id)
+                    this.updatePostMethod(values, this.$route.params.id)
                 }
             },
             onFinishFailed(errorInfo) {
                 console.log('Failed:', errorInfo);
             },
-            createUserMethod(values) {
-                this.$store.dispatch('users/createUser', values);
+            createPostMethod(values) {
+                this.$store.dispatch('posts/createPost', {"values":values, "userId" : this.$route.params.id});
             },
-            updateUserMethod(values, id) {
-                this.$store.dispatch('users/updateUser', {values, id});
+            updatePostMethod(values, id) {
+                this.$store.dispatch('posts/updatePost', {"values":values, "id" : id});
             },
         }
     });

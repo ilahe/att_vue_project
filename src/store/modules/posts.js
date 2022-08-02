@@ -13,18 +13,17 @@ const state = {
 
 // actions
 const actions = {
-    getPosts ({ commit, state }, data) {
+    getPosts({commit, state}, data) {
         let myUrl;
         if (state.doFilter) {
             var filteredTitle = data.filterData.title ? data.filterData.title : "";
             var filteredBody = data.filterData.body ? data.filterData.body : ""
             myUrl = `https://gorest.co.in/public/v1/users/${data.userId}/posts?page=${data.currentPage}&title=${filteredTitle}&body=${filteredBody}`;
-        }
-        else {
+        } else {
             myUrl = `https://gorest.co.in/public/v1/users/${data.userId}/posts?page=${data.currentPage}`
         }
         const header = {
-            headers: { Authorization: `Bearer 8de3a559816c6ed8ad2b795800b774a9ac00784acd9aa6de441a7424744671da` }
+            headers: {Authorization: `Bearer 8de3a559816c6ed8ad2b795800b774a9ac00784acd9aa6de441a7424744671da`}
         };
         axios.get(myUrl, header).then((res) => {
             commit('setPosts', res.data.data);
@@ -41,12 +40,12 @@ const actions = {
         commit('setCurrentPage', currentPage);
     },
 
-    createPost ({ commit }, formData) {
+    createPost({commit}, data) {
         commit('setResponse', "");
         const header = {
-            headers: { Authorization: `Bearer 8de3a559816c6ed8ad2b795800b774a9ac00784acd9aa6de441a7424744671da` }
+            headers: {Authorization: `Bearer 8de3a559816c6ed8ad2b795800b774a9ac00784acd9aa6de441a7424744671da`}
         };
-        axios.post(`https://gorest.co.in/public/v1/users`, formData, header)
+        axios.post(`https://gorest.co.in/public/v1/users/${data.userId}/posts`, data.values, header)
             .then((res) => {
                 if (res.status = 201) {
                     commit('setResponse', "success");
@@ -56,26 +55,26 @@ const actions = {
         });
     },
 
-    getPost ({ commit }, id) {
-        commit('setUserNotFound', false);
+    getPost({commit}, id) {
+        commit('setPostNotFound', false);
         const header = {
-            headers: { Authorization: `Bearer 8de3a559816c6ed8ad2b795800b774a9ac00784acd9aa6de441a7424744671da` }
+            headers: {Authorization: `Bearer 8de3a559816c6ed8ad2b795800b774a9ac00784acd9aa6de441a7424744671da`}
         };
-        axios.get(`https://gorest.co.in/public/v1/users/${id}`, header)
+        axios.get(`https://gorest.co.in/public/v1/posts/${id}`, header)
             .then((res) => {
-                commit('setUserNotFound', false);
-                commit('setUserData', res.data.data);
+                commit('setPostNotFound', false);
+                commit('setPostData', res.data.data);
             }).catch((err) => {
-            commit('setUserNotFound', true);
+            commit('setPostNotFound', true);
         });
     },
 
-    updatePost ({ commit }, data) {
+    updatePost({commit}, data) {
         commit('setResponse', "");
         const header = {
-            headers: { Authorization: `Bearer 8de3a559816c6ed8ad2b795800b774a9ac00784acd9aa6de441a7424744671da` }
+            headers: {Authorization: `Bearer 8de3a559816c6ed8ad2b795800b774a9ac00784acd9aa6de441a7424744671da`}
         };
-        axios.put(`https://gorest.co.in/public/v1/users/${data.id}`, data.values, header)
+        axios.put(`https://gorest.co.in/public/v1/posts/${data.id}`, data.values, header)
             .then((res) => {
                 if (res.status = 201) {
                     commit('setResponse', "success");
@@ -88,7 +87,7 @@ const actions = {
     deletePost({commit}, id) {
         commit('setResponse', "");
         const header = {
-            headers: { Authorization: `Bearer 8de3a559816c6ed8ad2b795800b774a9ac00784acd9aa6de441a7424744671da` }
+            headers: {Authorization: `Bearer 8de3a559816c6ed8ad2b795800b774a9ac00784acd9aa6de441a7424744671da`}
         };
         axios.delete(`https://gorest.co.in/public/v1/posts/${id}`, header)
             .then((res) => {
@@ -103,25 +102,25 @@ const actions = {
 
 // mutations
 const mutations = {
-    setPosts (state, posts) {
+    setPosts(state, posts) {
         state.postsData = posts;
     },
-    setCurrentPage (state, currentPage) {
+    setCurrentPage(state, currentPage) {
         state.currentPage = currentPage;
     },
-    setTotalCount (state, totalCount) {
+    setTotalCount(state, totalCount) {
         state.totalCount = totalCount;
     },
-    setResponse (state, response) {
+    setResponse(state, response) {
         state.responseFromApi = response;
     },
-    setPostData (state, postData) {
+    setPostData(state, postData) {
         state.postData = postData;
     },
-    setPostNotFound (state, postNotFound) {
+    setPostNotFound(state, postNotFound) {
         state.postNotFound = postNotFound;
     },
-    setDoFilter (state, doFilter) {
+    setDoFilter(state, doFilter) {
         state.doFilter = doFilter;
     }
 };

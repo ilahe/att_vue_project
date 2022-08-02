@@ -2,7 +2,7 @@
     <div>
         <div class="dFlexV1">
             <h3>Posts List </h3>
-            <router-link to="/createUser">
+            <router-link :to="{ name: 'createPost', params: { id: this.$route.params.id }}">
                 <a-button type="primary">New Post</a-button>
             </router-link>
         </div>
@@ -37,7 +37,7 @@
                 <template v-if="column.key == 'action'">
                     <div class="dFlexV2">
                         <div class="mr-1">
-                            <router-link :to="{ name: 'updateUser', params: { id: record.id }}">
+                            <router-link :to="{ name: 'updatePost', params: { id: record.id,  userId: this.$route.params.id  }}">
                                 <a-button type="primary">Edit</a-button>
                             </router-link>
                         </div>

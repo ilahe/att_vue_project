@@ -4,6 +4,7 @@ import Users from '../components/users/index'
 import User from '../components/users/User'
 import ThePageNotFound from '../components/common/PageNotFound'
 import Posts from '../components/posts/index'
+import Post from '../components/posts/Post'
 
 const routes = [
   {
@@ -30,6 +31,16 @@ const routes = [
     path: '/user/:id/posts',
     name: 'Posts',
     component: Posts
+  },
+  {
+    path: '/users/:id/createPost',
+    name: 'createPost',
+    component: Post
+  },
+  {
+    path: '/users/:userId/post/:id',
+    name: 'updatePost',
+    component: Post
   },
   {
     path: '/:catchAll(.*)',
