@@ -14,7 +14,6 @@ const state = {
 // actions
 const actions = {
     getPosts ({ commit, state }, data) {
-        console.log("getPosts", data)
         let myUrl;
         if (state.doFilter) {
             var filteredTitle = data.filterData.title ? data.filterData.title : "";
@@ -91,7 +90,7 @@ const actions = {
         const header = {
             headers: { Authorization: `Bearer 8de3a559816c6ed8ad2b795800b774a9ac00784acd9aa6de441a7424744671da` }
         };
-        axios.delete(`https://gorest.co.in/public/v1/users/${id}`, header)
+        axios.delete(`https://gorest.co.in/public/v1/posts/${id}`, header)
             .then((res) => {
                 if (res.status = 201) {
                     commit('setResponse', "success");
