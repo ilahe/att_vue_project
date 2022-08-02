@@ -26,7 +26,7 @@
                 <template v-if="column.key == 'action'">
                     <div class="dFlexV2">
                         <div class="mr-1">
-                            <router-link to="">
+                            <router-link :to="{ name: 'updateUser', params: { id: record.id }}">
                                 <a-button type="primary">Edit</a-button>
                             </router-link>
                         </div>
@@ -39,7 +39,7 @@
         </a-table>
 
         <div class="paginationContainer">
-            <a-pagination :current="currentPage" :total="totalCount" @change="onChangePage" show-less-items/>
+            <a-pagination :current="currentPage" :total="totalCount" @change="onChangePage"  show-less-items/>
         </div>
 
     </div>
