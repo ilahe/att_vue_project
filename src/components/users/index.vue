@@ -77,7 +77,10 @@
         </a-table>
 
         <div class="paginationContainer">
-            <a-pagination :current="currentPage" :total="totalCount" @change="onChangePage"  show-less-items/>
+            <a-pagination
+                    :current="currentPage"
+                    :total="totalCount"
+                    @change="onChangePage"/>
         </div>
     </div>
 </template>

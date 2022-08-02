@@ -1,19 +1,8 @@
-# att_task
+This project is created for managing users and their posts.
 
-## Project setup
-```
-npm install
-```
+For install project
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+1) git clone https://github.com/ilahe/att_vue_project.git 
+2) go to the folder where you cloned project
+3) npm install
+4) npm run serve
