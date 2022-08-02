@@ -61,3 +61,14 @@ body .dFlexV2 {
   justify-content: center;
   align-items: center;
 }
+
+.filterContainer {
+  border: 1px solid #f0f0f0;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.formFilter {
+  display: flex;
+  justify-content: space-between;
+}

@@ -58,9 +58,9 @@
 </template>
 
 <script>
+    import {defineComponent, reactive} from 'vue';
     import {mapState, mapActions} from "vuex";
     import { notification } from 'ant-design-vue';
-    import {defineComponent, reactive} from 'vue';
     export default defineComponent({
         name: "User",
         setup() {
