@@ -3,6 +3,7 @@ import Home from '../components/index';
 import Users from '../components/users/index'
 import User from '../components/users/User'
 import ThePageNotFound from '../components/common/PageNotFound'
+import Posts from '../components/posts/index'
 
 const routes = [
   {
@@ -26,10 +27,16 @@ const routes = [
     component: User
   },
   {
+    path: '/user/:id/posts',
+    name: 'Posts',
+    component: Posts
+  },
+  {
     path: '/:catchAll(.*)',
     name: 'pageNotFound',
     component: ThePageNotFound
   },
+
 ];
 
 const router = createRouter({

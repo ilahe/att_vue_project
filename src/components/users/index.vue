@@ -57,6 +57,11 @@
                 <template v-if="column.key == 'action'">
                     <div class="dFlexV2">
                         <div class="mr-1">
+                            <router-link :to="{ name: 'Posts', params: { id: record.id }}">
+                                <a-button type="primary">Posts</a-button>
+                            </router-link>
+                        </div>
+                        <div class="mr-1">
                             <router-link :to="{ name: 'updateUser', params: { id: record.id }}">
                                 <a-button type="primary">Edit</a-button>
                             </router-link>
