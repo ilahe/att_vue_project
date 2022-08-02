@@ -1,0 +1,57 @@
+body {
+  background: #f0f2f5;
+}
+.mr-1 {
+  margin-right: 10px;
+}
+body .layoutContent {
+  padding: 25px 50px;
+}
+body .layoutContent .innerContent {
+  background: #fff;
+  padding: 24px;
+  min-height: calc(100vh - 124px);
+}
+body .layoutContent .mainPageContainer {
+  height: 70vh;
+  padding-top: 40px;
+  text-align: center;
+  font-size: 16px;
+  line-height: 30px;
+  position: relative;
+}
+body .layoutContent .mainPageContainer .bgImage {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  opacity: 0.2;
+  z-index: 1;
+  background: no-repeat right bottom/ 30% url("../logo-main.png");
+}
+body .layoutContent .mainPageContainer .innerPart {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  z-index: 2;
+}
+body .layoutContent .paginationContainer {
+  display: flex;
+  justify-content: flex-end;
+  margin: 20px 0;
+}
+body .layoutContent .dFlexV1 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+body .dFlexV2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
