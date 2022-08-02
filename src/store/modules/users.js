@@ -70,6 +70,21 @@ const actions = {
                 commit('setResponse', "failed");
             });
     },
+
+    deleteUser({commit}, id) {
+        commit('setResponse', "");
+        const header = {
+            headers: { Authorization: `Bearer 8de3a559816c6ed8ad2b795800b774a9ac00784acd9aa6de441a7424744671da` }
+        };
+        axios.delete(`https://gorest.co.in/public/v1/users/${id}`, header)
+            .then((res) => {
+                if (res.status = 201) {
+                    commit('setResponse', "success");
+                }
+            }).catch((err) => {
+            commit('setResponse', "failed");
+        });
+    }
 };
 
 // mutations
@@ -91,7 +106,7 @@ const mutations = {
     },
     setUserNotFound (state, userNotFound) {
         state.userNotFound = userNotFound;
-    },
+    }
 };
 
 export default {

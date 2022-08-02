@@ -31,7 +31,9 @@
                             </router-link>
                         </div>
                         <div>
-                            <a-button type="primary">Delete</a-button>
+                            <a-popconfirm title="Are you sure to want this user" @confirm="confirmDelete(record.id)" @cancel="cancelDelete">
+                                <a-button type="primary">Delete</a-button>
+                            </a-popconfirm>
                         </div>
                     </div>
                 </template>
@@ -41,7 +43,6 @@
         <div class="paginationContainer">
             <a-pagination :current="currentPage" :total="totalCount" @change="onChangePage"  show-less-items/>
         </div>
-
     </div>
 </template>
 
@@ -90,21 +91,36 @@
         },
         computed: mapState({
             users: state => state.users.usersData,
-            currentPage : state => state.users.currentPage,
-            totalCount : state => state.users.totalCount
+            currentPage: state => state.users.currentPage,
+            totalCount: state => state.users.totalCount,
+            response: state => state.users.responseFromApi,
         }),
         mounted() {
             this.getData();
         },
+        watch: {
+            response(newResponse) {
+                if (newResponse !== "") {
+                    if (newResponse === "success") {
+                        this.getData();
+                    }
+                }
+            },
+        },
         methods: {
-            ...mapActions('users', ["getUsers", "updateCurrentPage"]),
-
+            ...mapActions('users', ["getUsers", "updateCurrentPage", "deleteUser", "updateWantDelete"]),
             getData() {
                 this.$store.dispatch('users/getUsers', this.currentPage);
             },
             onChangePage(page) {
                 this.$store.dispatch('users/updateCurrentPage', page);
                 this.getData();
+            },
+            confirmDelete(id) {
+                this.$store.dispatch('users/deleteUser', id);
+            },
+            cancelDelete() {
+                console.log("canceled");
             }
         }
     });
